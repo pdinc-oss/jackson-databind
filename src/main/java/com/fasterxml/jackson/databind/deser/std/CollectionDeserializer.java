@@ -220,6 +220,11 @@ public class CollectionDeserializer
         while ((t = jp.nextToken()) != JsonToken.END_ARRAY) {
             Object value;
             
+            if (t==null && jp.isEnabled(JsonParser.Feature.GRACEFUL_EOF_ON_JSON_CONTENT))
+            {
+                break;
+            }
+            
             if (t == JsonToken.VALUE_NULL) {
                 value = null;
             } else if (typeDeser == null) {

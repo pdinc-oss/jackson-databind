@@ -1194,6 +1194,8 @@ public class ObjectReader
                 }
             } else if (t == JsonToken.END_ARRAY || t == JsonToken.END_OBJECT) {
                 result = valueToUpdate;
+            } else if (t == null && jp.isEnabled(JsonParser.Feature.GRACEFUL_EOF_ON_JSON_CONTENT)) {
+                result = valueToUpdate;
             } else {
                 DeserializationContext ctxt = createDeserializationContext(jp, _config);
                 JsonDeserializer<Object> deser = _findRootDeserializer(ctxt, _valueType);

@@ -178,7 +178,8 @@ public class BeanDeserializer
         for (; t == JsonToken.FIELD_NAME; t = jp.nextToken()) {
             String propName = jp.getCurrentName();
             // Skip field name:
-            jp.nextToken();
+            JsonToken nt = jp.nextToken();
+            if (jp.isEnabled(JsonParser.Feature.GRACEFUL_EOF_ON_JSON_CONTENT) && nt==null) break;
             SettableBeanProperty prop = _beanProperties.find(propName);
             
             if (prop != null) { // normal case
@@ -289,7 +290,8 @@ public class BeanDeserializer
         for (; jp.getCurrentToken() != JsonToken.END_OBJECT; jp.nextToken()) {
             String propName = jp.getCurrentName();
             // Skip field name:
-            jp.nextToken();
+            JsonToken nt = jp.nextToken();
+            if (jp.isEnabled(JsonParser.Feature.GRACEFUL_EOF_ON_JSON_CONTENT) && nt==null) break;
             SettableBeanProperty prop = _beanProperties.find(propName);
             if (prop != null) { // normal case
                 try {
