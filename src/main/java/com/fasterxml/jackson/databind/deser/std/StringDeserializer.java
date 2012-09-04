@@ -36,7 +36,7 @@ public final class StringDeserializer
             return ob.toString();
         }
         // Can deserialize any scalar value, but not markers
-        if (curr.isScalarValue()) {
+        if (curr !=null && curr.isScalarValue()) {
             return jp.getText();
         }
         throw ctxt.mappingException(_valueClass, curr);
